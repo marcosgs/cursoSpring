@@ -1,12 +1,12 @@
-package com.md.cursomc;
+package com.md.cursoSpring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CursomcApplication {
+public class CursoSpringApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CursomcApplication.class, args);
+		SpringApplication.run(CursoSpringApplication.class, args);
 	}
 }
