@@ -22,7 +22,7 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 
-	@JsonManagedReference //Proteção para referencia ciclica
+	@JsonManagedReference //Proteção para referencia ciclica Evita que numa busca não fique em looping
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 
