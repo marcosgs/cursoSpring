@@ -25,9 +25,9 @@ public class Produto implements Serializable {
 	private String nome;
 	private double preco;
 
-	@JsonBackReference
+	@JsonBackReference //Trata a referencia ciclica, impedindo o looping 
 	@ManyToMany
-	@JoinTable(name = "Produto_Categoria", joinColumns = @JoinColumn(name = "produto_id"),
+	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"),
 			inverseJoinColumns= @JoinColumn(name="categoria_id")) // Tabela de relacionamento muitos pra muitos
 	private List<Categoria> categorias = new ArrayList<>();
 
