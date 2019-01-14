@@ -30,12 +30,15 @@ public class Cliente implements Serializable {
 	private Integer tipoCliente;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 
-	@ElementCollection //Identifica que é uma coleção de dados
-	@CollectionTable(name="telefone") //Mapeamento para criar uma tabela apartir desta coleção
+	@ElementCollection // Identifica que é uma coleção de dados
+	@CollectionTable(name = "telefone") // Mapeamento para criar uma tabela apartir desta coleção
 	private Set<String> telefones = new HashSet<>(); // Optou-se o set para evitar repetição dos telefones
+
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Cliente() {
 
@@ -105,6 +108,14 @@ public class Cliente implements Serializable {
 
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override

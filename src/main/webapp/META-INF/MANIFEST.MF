@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: cursoSpring
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: marco
+Implementation-Vendor-Id: com.md.cursospring
+Build-Jdk: 1.8.0_191
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/cursoSpring
+Created-By: Maven Integration for Eclipse
+

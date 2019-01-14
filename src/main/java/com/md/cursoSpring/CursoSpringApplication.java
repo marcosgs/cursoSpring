@@ -1,5 +1,6 @@
 package com.md.cursoSpring;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.md.cursoSpring.domain.Cidade;
 import com.md.cursoSpring.domain.Cliente;
 import com.md.cursoSpring.domain.Endereco;
 import com.md.cursoSpring.domain.Estado;
+import com.md.cursoSpring.domain.Pagamento;
+import com.md.cursoSpring.domain.PagamentoBoleto;
+import com.md.cursoSpring.domain.PagamentoComCartao;
+import com.md.cursoSpring.domain.Pedido;
 import com.md.cursoSpring.domain.Produto;
+import com.md.cursoSpring.domain.enums.EstadoPagamento;
 import com.md.cursoSpring.domain.enums.TipoCliente;
 import com.md.cursoSpring.repositories.CategoriaRepository;
 import com.md.cursoSpring.repositories.CidadeRepository;
-import com.md.cursoSpring.repositories.EnderecoRepository;
 import com.md.cursoSpring.repositories.ClienteRepository;
+import com.md.cursoSpring.repositories.EnderecoRepository;
 import com.md.cursoSpring.repositories.EstadoRepository;
+import com.md.cursoSpring.repositories.PagamentoRepository;
+import com.md.cursoSpring.repositories.PedidoRepository;
 import com.md.cursoSpring.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -36,12 +44,18 @@ public class CursoSpringApplication implements CommandLineRunner {
 
 	@Autowired
 	private EstadoRepository estadoRepository;
-	
+
 	@Autowired
 	private ClienteRepository clienteRepository;
-	
+
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursoSpringApplication.class, args);
@@ -57,9 +71,7 @@ public class CursoSpringApplication implements CommandLineRunner {
 		Produto p2 = new Produto(null, "Impressora", 800);
 		Produto p3 = new Produto(null, "Mouse", 80);
 
-		// cat1.setProdutos(Arrays.asList(p1, p2, p3));
-
-		cat2.getProdutos().addAll(Arrays.asList(p1, p2, p3));// Adiciona os produtos a lista de categorias
+		cat1.setProdutos(Arrays.asList(p1, p2, p3));// Adiciona os produtos a lista de categorias
 		cat2.getProdutos().addAll(Arrays.asList(p2));
 
 		p1.getCategorias().addAll(Arrays.asList(cat1)); // Adiciona os categorias a lista de produtos
@@ -92,6 +104,24 @@ public class CursoSpringApplication implements CommandLineRunner {
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
-				
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+		
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6); 
+	
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
+		
+		ped2.setPagamento(pagto2);
+		
+		cli1.getPedidos().addAll( Arrays.asList(ped1, ped2));
+		
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 	}
 }
