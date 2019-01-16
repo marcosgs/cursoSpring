@@ -38,7 +38,5 @@ public class PagamentoBoleto extends Pagamento {
 	public void setDataPagamento(Date dataPagamento) {
 		this.dataPagamento = dataPagamento;
 	}
-	
-	
 
 }
